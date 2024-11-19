@@ -127,10 +127,59 @@ amm.swap(
   direction,
   amount,
   {
-    jitoTipLamports: 100_000, // Optional: tip amount for Jito in lamports
+    includeDexes: ['Raydium', 'Orca', 'Whirlpool'], // Optional: specify DEXes
+    jitoTipLamports: 100_000,                      // Optional: tip amount for Jito in lamports
   }
 ).catch(console.error);
 ```
+
+### Perform Custom Swap for Makers
+
+```typescript
+// Create a signer for the swap
+const signer = Keypair.generate();
+
+// Swap parameters for makers
+const direction: 'buy' | 'sell' = 'buy';
+const dexes = 'Raydium,Orca,Whirlpool'; // DEXes to include
+
+// Execute the swapMakers method
+amm['swapMakers'](
+  direction,
+  mint,
+  signer,
+  'recentBlockhash', // Replace with actual blockhash
+  dexes
+).then((transaction) => {
+  // Handle the transaction, e.g., send it to the network
+}).catch(console.error);
+```
+
+### Perform Custom Swap for Volume
+
+```typescript
+// Create a signer for the swap
+const signer = Keypair.generate();
+
+// Swap parameters for volume
+const direction: 'buy' | 'sell' = 'sell';
+const amount = 1_000_000; // Amount in lamports
+const dexes = 'Raydium,Orca,Whirlpool'; // DEXes to include
+
+// Execute the swapVolume method
+amm['swapVolume'](
+  direction,
+  mint,
+  amount,
+  'recentBlockhash', // Replace with actual blockhash
+  signer,
+  dexes
+).then((transaction) => {
+  // Handle the transaction, e.g., send it to the network
+}).catch(console.error);
+```
+
+> **Note:** The `swapMakers` and `swapVolume` methods are private methods intended for internal use within the `Amm` class. The above examples demonstrate how to use them if you choose to expose them or adjust their access modifiers.
 
 ## API Reference
 
@@ -169,6 +218,31 @@ constructor(connection: Connection, payerKeypair: Keypair, options?: AmmOptions)
 - `getSolBalance(): Promise<number>`
 
   Gets the SOL balance for the payer account.
+
+- `swapMakers(direction: 'buy' | 'sell', mint: PublicKey, signer: Keypair, blockhash: string, dexes: string): Promise<VersionedTransaction>`
+
+  Swaps tokens for the makers method.
+
+  - **Parameters:**
+    - `direction`: `'buy' | 'sell'` - Direction of the swap.
+    - `mint`: `PublicKey` - Token mint address.
+    - `signer`: `Keypair` - Keypair of the signer.
+    - `blockhash`: `string` - Recent blockhash.
+    - `dexes`: `string` - Comma-separated list of DEXes to include.
+
+- `swapVolume(direction: 'buy' | 'sell', mint: PublicKey, amount: number, blockhash: string, signer: Keypair, dexes: string): Promise<VersionedTransaction>`
+
+  Swaps tokens for the volume method.
+
+  - **Parameters:**
+    - `direction`: `'buy' | 'sell'` - Direction of the swap.
+    - `mint`: `PublicKey` - Token mint address.
+    - `amount`: `number` - Amount to swap in lamports.
+    - `blockhash`: `string` - Recent blockhash.
+    - `signer`: `Keypair` - Keypair of the signer.
+    - `dexes`: `string` - Comma-separated list of DEXes to include.
+
+> **Note:** The `swapMakers` and `swapVolume` methods are marked as `private` in the class. If you wish to use them directly, you can change their access modifiers or use them as shown in the [Usage](#usage) section.
 
 ## Examples
 
