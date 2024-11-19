@@ -1,7 +1,7 @@
 # Solana Volume SDK
 
 [![npm version](https://img.shields.io/npm/v/@oselezi/solana-volume-sdk.svg)](https://www.npmjs.com/package/@oselezi/solana-volume-sdk)
-[![license](https://img.shields.io/npm/l/@oselezi/solana-volume-sdk.svg)](https://github.com/oselezi/solana-volume-sdk/blob/master/LICENSE)
+[![license](https://img.shields.io/npm/l/@oselezi/solana-volume-sdk.svg)](https://github.com/oselezi/solana-volume-sdk/blob/main/LICENSE)
 
 A powerful and easy-to-use SDK for generating trading volume and market making on the Solana blockchain.
 

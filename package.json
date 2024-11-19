@@ -10,7 +10,8 @@
 	"scripts": {
 		"build": "tsc",
 		"test": "node dist/test/test.js",
-		"prepare": "npm run build"
+		"prepare": "npm run build",
+		"docs": "typedoc --out docs src"
 	},
 	"keywords": [
 		"solana",
@@ -43,7 +44,8 @@
 		"@types/bs58": "^4.0.1",
 		"@types/node": "^16.11.7",
 		"@types/node-fetch": "^2.5.12",
-		"typescript": "^5.0.0"
+		"typescript": "^5.0.0",
+		"typedoc": "^0.26.11"
 	},
 	"publishConfig": {
 		"access": "public",
