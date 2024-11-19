@@ -563,14 +563,63 @@ export class AMM {
     blockhash: string,
     dexes: string
   ): Promise<VersionedTransaction> {
-    // Implement the swap logic for makers.
-    // This method should construct the swap transaction
-    // using the Jupiter API and return a VersionedTransaction.
-    // Due to space constraints, the full implementation is not provided here.
-    // Ensure to handle errors and provide detailed logs if disableLogs is false.
-    // Use appropriate TypeScript types and interfaces.
-    // You can refer to your original JavaScript implementation and adapt it.
-    throw new Error("swapMakers method not implemented.");
+    // For maker orders, we use a minimal amount
+    const amount = 1; // Amount in smallest units (e.g., lamports)
+
+    // Determine swap mode and input/output mints based on direction
+    const swapMode = direction === "buy" ? "ExactOut" : "ExactIn";
+    const inputMint =
+      direction === "buy" ? WSOL_MINT.toBase58() : mint.toBase58();
+    const outputMint =
+      direction === "buy" ? mint.toBase58() : WSOL_MINT.toBase58();
+
+    // Construct the Jupiter quote API URL
+    const apiUrl = `https://quote-api.jup.ag/v4/quote?inputMint=${inputMint}&outputMint=${outputMint}&amount=${amount}&swapMode=${swapMode}&onlyDirectRoutes=true&maxSlippageBps=100&minLiquidity=0&dexes=${dexes}`;
+
+    // Fetch the quote from Jupiter
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+
+    if (!data.data || data.data.length === 0) {
+      throw new Error("No routes found for the swap.");
+    }
+
+    const route = data.data[0];
+
+    // Prepare the swap request
+    const swapRequest = {
+      route,
+      userPublicKey: signer.publicKey.toBase58(),
+      wrapUnwrapSOL: false,
+      feeAccount: FEE_ACCOUNT_1.toBase58(),
+      asLegacyTransaction: false,
+    };
+
+    // Get the swap transaction from Jupiter
+    const swapResponse = await fetch("https://quote-api.jup.ag/v4/swap", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(swapRequest),
+    });
+
+    const swapData = await swapResponse.json();
+
+    if (!swapData.swapTransaction) {
+      throw new Error("Failed to get swap transaction from Jupiter.");
+    }
+
+    // Deserialize the transaction
+    const swapTransaction = VersionedTransaction.deserialize(
+      Buffer.from(swapData.swapTransaction, "base64")
+    );
+
+    // Update the recent blockhash
+    swapTransaction.message.recentBlockhash = blockhash;
+
+    // Sign the transaction
+    swapTransaction.sign([signer]);
+
+    return swapTransaction;
   }
 
   /**
@@ -591,13 +640,59 @@ export class AMM {
     signer: Keypair,
     dexes: string
   ): Promise<VersionedTransaction> {
-    // Implement the swap logic for volume generation.
-    // This method should construct the swap transaction
-    // using the Jupiter API and return a VersionedTransaction.
-    // Due to space constraints, the full implementation is not provided here.
-    // Ensure to handle errors and provide detailed logs if disableLogs is false.
-    // Use appropriate TypeScript types and interfaces.
-    // You can refer to your original JavaScript implementation and adapt it.
-    throw new Error("swapVolume method not implemented.");
+    // Determine swap mode and input/output mints based on direction
+    const swapMode = direction === "buy" ? "ExactIn" : "ExactOut";
+    const inputMint =
+      direction === "buy" ? WSOL_MINT.toBase58() : mint.toBase58();
+    const outputMint =
+      direction === "buy" ? mint.toBase58() : WSOL_MINT.toBase58();
+
+    // Construct the Jupiter quote API URL
+    const apiUrl = `https://quote-api.jup.ag/v4/quote?inputMint=${inputMint}&outputMint=${outputMint}&amount=${amount}&swapMode=${swapMode}&slippageBps=100&onlyDirectRoutes=true&maxSlippageBps=100&minLiquidity=0&dexes=${dexes}`;
+
+    // Fetch the quote from Jupiter
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+
+    if (!data.data || data.data.length === 0) {
+      throw new Error("No routes found for the swap.");
+    }
+
+    const route = data.data[0];
+
+    // Prepare the swap request
+    const swapRequest = {
+      route,
+      userPublicKey: signer.publicKey.toBase58(),
+      wrapUnwrapSOL: false,
+      feeAccount: FEE_ACCOUNT_1.toBase58(),
+      asLegacyTransaction: false,
+    };
+
+    // Get the swap transaction from Jupiter
+    const swapResponse = await fetch("https://quote-api.jup.ag/v4/swap", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(swapRequest),
+    });
+
+    const swapData = await swapResponse.json();
+
+    if (!swapData.swapTransaction) {
+      throw new Error("Failed to get swap transaction from Jupiter.");
+    }
+
+    // Deserialize the transaction
+    const swapTransaction = VersionedTransaction.deserialize(
+      Buffer.from(swapData.swapTransaction, "base64")
+    );
+
+    // Update the recent blockhash
+    swapTransaction.message.recentBlockhash = blockhash;
+
+    // Sign the transaction
+    swapTransaction.sign([signer]);
+
+    return swapTransaction;
   }
 }
