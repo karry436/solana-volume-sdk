@@ -1,6 +1,6 @@
 {
 	"name": "@oselezi/solana-volume-sdk",
-	"version": "1.5.1",
+	"version": "1.5.2",
 	"description": "Solana Market Maker AMM to generate volume trades",
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
@@ -44,8 +44,8 @@
 		"@types/bs58": "^4.0.1",
 		"@types/node": "^16.11.7",
 		"@types/node-fetch": "^2.5.12",
-		"typescript": "^5.0.0",
-		"typedoc": "^0.26.11"
+		"typedoc": "^0.26.11",
+		"typescript": "^5.0.0"
 	},
 	"publishConfig": {
 		"access": "public",
