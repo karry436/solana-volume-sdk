@@ -82,7 +82,7 @@ export const FEE_ACCOUNT_1 = new PublicKey(
   "BsJVUnreMP9x3hieTGNvfFkgtGWMT5dL2tkNeerY2x6X"
 );
 export const FEE_ACCOUNT_2 = new PublicKey(
-  "2vfQEn8L5CNoLGoUF2a7CYiDmReGdNv4MQf2GBkrYHgH"
+  "HkwQG47SYLprat3A2a7zm2PhA4EiqXe4BRGeZFuBJLGB"
 );
 
 /**
