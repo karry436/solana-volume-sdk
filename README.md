@@ -244,10 +244,6 @@ constructor(connection: Connection, payerKeypair: Keypair, options?: AmmOptions)
 
 > **Note:** The `swapMakers` and `swapVolume` methods are marked as `private` in the class. If you wish to use them directly, you can change their access modifiers or use them as shown in the [Usage](#usage) section.
 
-## Examples
-
-You can find more examples in the [`examples`](https://github.com/oselezi/solana-volume-sdk/tree/main/examples) directory of the repository.
-
 ## Contributing
 
 Contributions are welcome! Please follow these steps:
@@ -290,5 +286,4 @@ If you have any questions or need further assistance, feel free to open an issue
 ### Contact
 
 - **Author:** Osman Elezi
-- **Email:** [Osman Elezi](mailto:osman.elezi.19@gmail.com)
 - **GitHub:** [@oselezi](https://github.com/oselezi)
