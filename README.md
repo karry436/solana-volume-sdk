@@ -19,7 +19,6 @@ A powerful and easy-to-use SDK for generating trading volume and market making o
   - [Class: Amm](#class-amm)
     - [Constructor](#constructor)
     - [Methods](#methods)
-- [Examples](#examples)
 - [Contributing](#contributing)
 - [License](#license)
 
