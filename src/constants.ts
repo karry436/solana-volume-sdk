@@ -51,7 +51,7 @@ export const DEXES: string[] = [
 ];
 
 /**
- * List of Jito accounts used for MEV protection.
+ * List of Jito accounts used for MEV protection. (JitoTip 1~8)
  */
 export const JITO_ACCOUNTS: PublicKey[] = [
   new PublicKey("96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5"),
@@ -61,7 +61,7 @@ export const JITO_ACCOUNTS: PublicKey[] = [
   new PublicKey("DfXygSm4jCyNCybVYYK6DwvWqjKee8pbDmJGcLWNDXjh"),
   new PublicKey("ADuUkR4vqLUMWXxW9gh6D6L8pMSawimctcNZ5pGwDcEt"),
   new PublicKey("DttWaMuVvTiduZRnguLF7jNxTgiMBZ1hyAumKUiL2KRL"),
-  new PublicKey("3AVi9Tg9Uo68tJfuvoKvqKNWKkC5wPdSSdeBnizK6jT"),
+  new PublicKey("3AVi9Tg9Uo68tJfuvoKvqKNWKkC5wPdSSdeBnizKZ6jT"),
 ];
 
 /**
@@ -76,13 +76,13 @@ export const JITO_URLS: string[] = [
 ];
 
 /**
- * Fee account public keys.
+ * Fee account public keys. (Jup Fee 1, 2)
  */
 export const FEE_ACCOUNT_1 = new PublicKey(
   "BsJVUnreMP9x3hieTGNvfFkgtGWMT5dL2tkNeerY2x6X"
 );
 export const FEE_ACCOUNT_2 = new PublicKey(
-  "HkwQG47SYLprat3A2a7zm2PhA4EiqXe4BRGeZFuBJLGB"
+  "2vfQEn8L5CNoLGoUF2a7CYiDmReGdNv4MQf2GBkrYHgH"
 );
 
 /**
